@@ -24,6 +24,7 @@ import itertools
 import collections
 import numpy as np
 import gc
+from typing import Optional
 
 __all__ = [
     "load_correct_tokenizer",
