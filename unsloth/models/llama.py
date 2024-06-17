@@ -1152,6 +1152,7 @@ class FastLlamaModel:
             padding_side      = "right",
             token             = token,
             trust_remote_code = trust_remote_code,
+            revision          = kwargs.get("revision", None),
         )
 
         model, tokenizer = patch_tokenizer(model, tokenizer)
