@@ -448,6 +448,7 @@ def load_correct_tokenizer(
     token = None,
     trust_remote_code = False,
     cache_dir = "huggingface_tokenizers_cache",
+    revision: Optional[str] = None,
 ):
     if IS_COLAB_ENVIRONMENT or IS_KAGGLE_ENVIRONMENT:
         cache_dir = cache_dir
@@ -470,6 +471,7 @@ def load_correct_tokenizer(
             legacy            = False,
             from_slow         = True,
             cache_dir         = cache_dir,
+            revision          = revision,
         )
     except:
         pass
@@ -486,6 +488,7 @@ def load_correct_tokenizer(
         token             = token,
         trust_remote_code = trust_remote_code,
         cache_dir         = cache_dir,
+        revision          = revision,
     )
 
     if slow_tokenizer is not None:
