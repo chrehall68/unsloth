@@ -514,6 +514,7 @@ def check_tokenizer(
     padding_side = "right",
     token = None,
     _reload = True,
+    revision: Optional[str] = None,
 ):
     # Checks tokenizer for out of bounds ids.
     # Mainly a fix for https://huggingface.co/berkeley-nest/Starling-LM-7B-alpha
@@ -629,6 +630,7 @@ def check_tokenizer(
                     legacy = False,
                     from_slow = True,
                     cache_dir = cache_dir,
+                    revision = revision,
                 )
                 return check_tokenizer(
                     model = model,
@@ -638,6 +640,7 @@ def check_tokenizer(
                     padding_side = padding_side,
                     token = token,
                     _reload = False,
+                    revision = revision,
                 )
                 break
             except:

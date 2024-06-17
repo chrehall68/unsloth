@@ -1312,6 +1312,7 @@ class FastLlamaModel:
                 model_max_length = max_position_embeddings,
                 padding_side     = "right",
                 token            = token,
+                revision         = kwargs.get("revision", None),
             )
         pass
         patch_saving_functions(tokenizer)
