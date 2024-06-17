@@ -1731,19 +1731,6 @@ class FastLlamaModel:
             use_reentrant = True,
         )
 
-        # Fix up config for transformers uploading PEFT
-        for active_adapter in model.peft_config.keys():
-            # Not necessary since we requires transformers >= 4.37
-            if False:
-                name = model.peft_config[active_adapter].base_model_name_or_path
-                if name.startswith("unsloth/") and name.endswith("-bnb-4bit"):
-                    name = name[:len(name) - len("-bnb-4bit")]
-                    model.peft_config[active_adapter].base_model_name_or_path = name
-                pass
-            # Add revision to enable future fast inference paths
-            model.peft_config[active_adapter].revision = f"unsloth"
-        pass
-
         from transformers.trainer import Trainer 
         if Trainer._inner_training_loop.__name__ != "_fast_inner_training_loop":
             raise RuntimeError(
