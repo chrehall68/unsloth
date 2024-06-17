@@ -100,6 +100,9 @@ class FastLanguageModel(FastLlamaModel):
         try:
             peft_config = PeftConfig .from_pretrained(model_name, token = token, revision = revision)
             base_model_revision  = peft_config.revision
+            # backwards compatability with previous versions
+            if base_model_revision == "unsloth":
+                base_model_revision = None  # unsloth was previously used as the default revision
             is_peft = True
         except:
             is_peft = False
