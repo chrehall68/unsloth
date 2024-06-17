@@ -91,6 +91,7 @@ class FastLanguageModel(FastLlamaModel):
         model_name = _get_model_name(model_name, load_in_4bit)
 
         # First check if it's a normal model via AutoConfig
+        base_model_revision = revision
         try:
             model_config = AutoConfig.from_pretrained(model_name, token = token, revision = revision)
             is_model = True
@@ -98,6 +99,7 @@ class FastLanguageModel(FastLlamaModel):
             is_model = False
         try:
             peft_config = PeftConfig .from_pretrained(model_name, token = token, revision = revision)
+            base_model_revision  = peft_config.revision
             is_peft = True
         except:
             is_peft = False
@@ -122,7 +124,7 @@ class FastLanguageModel(FastLlamaModel):
         if is_peft:
             # Check base model again for PEFT
             model_name = _get_model_name(peft_config.base_model_name_or_path, load_in_4bit)
-            model_config = AutoConfig.from_pretrained(model_name, token = token)
+            model_config = AutoConfig.from_pretrained(model_name, token = token, revision = base_model_revision)
         pass
 
         model_type = model_config.model_type
@@ -169,7 +171,7 @@ class FastLanguageModel(FastLlamaModel):
             model_patcher     = dispatch_model,
             tokenizer_name    = tokenizer_name,
             trust_remote_code = trust_remote_code,
-            revision          = revision if not is_peft else None,
+            revision          = base_model_revision,
             *args, **kwargs,
         )
         
